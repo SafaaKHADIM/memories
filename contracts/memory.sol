@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract memory {
+contract Memory {
   struct mymemory {
     uint id;
     string title;
