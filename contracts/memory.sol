@@ -34,7 +34,7 @@ contract Memory {
     delete memories[i];
   }
 
-  function find(uint id) view internal returns(uint) {
+  function find(uint id) view public returns(uint ) {
     for(uint i = 0; i < memories.length; i++) {
       if(memories[i].id == id) {
         return i;
@@ -42,5 +42,7 @@ contract Memory {
     }
     revert('memory does not exist!');
   }
+  
+
 
 }

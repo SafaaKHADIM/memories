@@ -13,24 +13,6 @@ let index;
 
 const initWeb3 = () => {
   return new Promise((resolve, reject) => {
- //   if(typeof window.ethereum !== 'undefined') {
-   //   const web3 = new Web3(window.ethereum);
-   //   window.ethereum.enable()
-   //     .then(() => {
-  //       resolve(
-   //         new Web3(window.ethereum)
-   //       );
-   //     })
-    //    .catch(e => {
-    //      reject(e);
-    //    });
- //     return;
-  //  }
-  //  if(typeof window.web3 !== 'undefined') {
-  //    return resolve(
-  //      new Web3(window.web3.currentProvider)
-  //    );
-   // }
     resolve(new Web3('http://localhost:9545'));
   });
 };
@@ -47,21 +29,25 @@ const initContract = () => {
 
 const initApp = () => {
 	const $create = document.getElementById('create');
-	//const $createResult = document.getElementById('create-result');
 	const $read = document.getElementById('read');
-	//const $readResult = document.getElementById('read-result');
 	const $edit = document.getElementById('update');
 	const $find = document.getElementById('find');
-	//const $editResult = document.getElementById('edit-result');
 	const $delete = document.getElementById('delete');
-	//const $deleteResult = document.getElementById('delete-result');
-	let accounts = [];
-	
+	const $titleUpdate = document.getElementById('title-update');
+	const $dateUpdate = document.getElementById('date-update');
+	const $descriptionUpdate = document.getElementById('description-update');
+	const $photoUpdate = document.getElementById('photo-update');
+	let accounts = [];	
 	web3.eth.getAccounts().then(_accounts =>{
 		accounts = _accounts;
 	});
+	
+	
 	//create
+	if($create){
 	$create.addEventListener('submit',e => {
+				console.log("inside the create function");
+
 		e.preventDefault();
 		const title = e.target.elements[0].value;
 		const date = e.target.elements[1].value;
@@ -71,16 +57,12 @@ const initApp = () => {
 					.send({from: accounts[0], gas:3000000})
 					.then(() => {
 						console.log("created successfully");
-						//$createResult.innerHTML = `New me ${name} was succefully created!`;
-					}).catch(e =>{
-						const balance = web3.eth.getBalance(accounts[0]);
+					}).catch(e =>{					
+						console.log("oooops there was an error : " + e );
 						
-						console.log("oooops there was an error"+ e + "balance  "+ balance);
-						//console.log(balance);
-						//$createResult.innerHTML = `there was an error whiile creating the user ${name}`;
 					});
 	});
-	
+	}
 	
 	//read
 //	$read.addEventListener('submit',e => {
@@ -102,36 +84,57 @@ const initApp = () => {
 
 
 	//find
+	if($find){
 	$find.addEventListener('submit',e => {
+		console.log("inside the find function");
 		e.preventDefault();
-		const id = e.target.elements[0].value;
 		
+		const id = e.target.elements[0].value;		
 		_memory.methods.find(id)
-					.send({from: accounts[0]})
+				.call({from: accounts[0]})
 					.then(result => {
-						index = result;
-					}).catch(() =>{
+						index = result+1;
+						console.log(result);
 						
+						_memory.methods.read(result+1).call()
+								.then(result => {
+									console.log(result);
+									$titleUpdate.value = result[1];
+									$dateUpdate.value = result[2];
+									$descriptionUpdate.value = result[3];
+									$photoUpdate.value = result[4];
+									console.log("yeeeey we did read the memory we want to update")
+								}).catch(() =>{
+									console.log("Ooooops there is an error we couldn t read the mrmory we want to update");
+								});	
+						
+						
+					}).catch( error =>{		
+						console.log("oooops an error while looking for the memory "+error);
 					});
+				
 	});
-	
+	}
 	
 	//edit
+	if($edit){
 	$edit.addEventListener('submit',e => {
+		console.log("inside edit function");
+		console.log(index);
 		e.preventDefault();
 		const title = e.target.elements[0].value;
 		const date = e.target.elements[1].value;
 		const description = e.target.elements[0].value;
 		const photo = e.target.elements[1].value;
 		_memory.methods.update(index, title, date, description, photo)
-					.send({from: accounts[0]})
+					.send({from: accounts[0], gas:3000000})
 					.then(() => {
-						
-					}).catch(() =>{
-						
+						console.log("memory updated succefully");
+					}).catch(error =>{
+						console.log("oooops there was en error : "+error);						
 					});
 	});
-	
+	}
 	
 	
 	
