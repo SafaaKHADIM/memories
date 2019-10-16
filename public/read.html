@@ -25,7 +25,7 @@
 	
   <link href="../assets/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css">
-
+  <script src="bundle.js"></script>
 </head>
 <body >
  
@@ -54,32 +54,27 @@
 
                
 
-                  <div class="col-md-3 product-men  "  >
-                  								<div class="men-pro-item simpleCart_shelfItem ">
-                  									<div class="men-thumb-item">
-                  										<img [src]="product.modelurl"  alt="" class="pro-image-front">
-                  										<img [src]="product.modelurl"  alt="" class="pro-image-back">
-                  											<div class="men-cart-pro">
-                  												<div class="inner-men-cart-pro">
-                  													<a href="single.html" class="link-product-add-cart">Quick View</a>
-                  												</div>
-                  											</div>
-                  											<!--<span class="product-new-top">delete </span>-->
-
-                  									</div>
-                  									<div class="item-info-product ">
-                  										<h4><a href="single.html">title</a></h4>
-                  										<div class="info-product-price">
-                  											<span class="item_price">date</span>
-                                        <br/>
-                                        <span >description</span>
-                  										</div>
-
-                  										
-
-                  									</div>
-                  								</div>
-                  							</div>
+					<div class="col-md-3 product-men  " id="read" >
+                  		<div class="men-pro-item simpleCart_shelfItem ">
+                  			<div class="men-thumb-item">
+                  				<img [src]="product.modelurl"  alt="" class="pro-image-front" id="photo">
+                  				<img [src]="product.modelurl"  alt="" class="pro-image-back">
+                  					<div class="men-cart-pro">
+                  						<div class="inner-men-cart-pro">
+                  							<a href="single.html" class="link-product-add-cart">Quick View</a>
+                  						</div>
+                  					</div>
+                  			</div>
+                  			<div class="item-info-product ">
+                  				<h4><a id="title">title</a></h4>
+                  				<div class="info-product-price">
+                  					<span class="item_price" id ="date">date</span>
+                                    <br/>
+                                    <span id="description" >description</span>
+                  				</div>                  										
+                  			</div>
+                  		</div>
+                  	</div>
 
 
 

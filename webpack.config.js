@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.js',
+  entry: ['./client/index.js'],
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js', // string
@@ -11,5 +11,13 @@ module.exports = {
     contentBase: path.join(__dirname, 'public'),
     compress: true,
     port: 8080
+  },
+   module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   }
 };
