@@ -68,11 +68,16 @@ const initApp = () => {
 		const description = e.target.elements[2].value;
 		const photo = e.target.elements[3].value;
 		_memory.methods.create(title, date, description, photo)
-					.send({from: accounts[0]})
+					.send({from: accounts[0], gas:3000000})
 					.then(() => {
-						$createResult.innerHTML = `New user ${name} was succefully created!`;
-					}).catch(() =>{
-						$createResult.innerHTML = `there was an error whiile creating the user ${name}`;
+						console.log("created successfully");
+						//$createResult.innerHTML = `New me ${name} was succefully created!`;
+					}).catch(e =>{
+						const balance = web3.eth.getBalance(accounts[0]);
+						
+						console.log("oooops there was an error"+ e + "balance  "+ balance);
+						//console.log(balance);
+						//$createResult.innerHTML = `there was an error whiile creating the user ${name}`;
 					});
 	});
 	
